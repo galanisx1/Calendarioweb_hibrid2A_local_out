@@ -1,0 +1,244 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+    font-size: 16px; /* Tamaño base de fuente */
+}
+
+.calendar {
+    margin-top: 15px;
+    width: 100%;
+    max-width: 600px;
+    font-size: 1rem;
+}
+
+.calendar td {
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 40px; /* Ajusta el tamaño según sea necesario */
+    height: 40px;
+}
+
+.calendar td span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 2px solid #79e3f5; /* Default circle border */
+    border-radius: 50%; /* Circle shape */
+    background-color: #f9f9f9; /* Default background */
+    color: black; /* Default text color */
+}
+
+.calendar td span.selected {
+    background-color: rgb(237, 22, 223); /* Solid green circle */
+    border-color: rgb(228, 15, 200); /* Match border to background */
+    color: white; /* Keep the text visible */
+}
+
+/* Disabled day circles - solid light grey, with white square background */
+.calendar td.disabled {
+    background-color: white; /* White background for the cell */
+    cursor: not-allowed;
+}
+
+.calendar td.disabled span {
+    background-color: #d3d3d3; /* Light gray for the circle */
+    border: 2px solid #d3d3d3;  /* Border color for the circle */
+    color: #a0a0a0; /* Optional: change the text color to match the disabled state */
+}
+
+/* Keep the background of the cell light grey */
+.disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+.selected {
+    background-color: green;
+    color: white;
+}
+
+.selected span {
+    background-color: green; /* Solid green background for the circle */
+    color: white; /* White text for better contrast */
+    border-color: green; /* Optional: make the border match the background */
+}
+
+h1, h3 {
+    margin-top: 5px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    font-size: 16pt;
+}
+
+.pricing-tables {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.pricing-tables-credit {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.pricing-tables-extra {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.pricing-tables table,
+.pricing-tables-credit table,
+.pricing-tables-extra table {
+    flex: 1 1 calc(100% - 20px);
+    max-width: 30%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.pricing-tables th, .pricing-tables td,
+.pricing-tables-credit th, .pricing-tables-credit td,
+.pricing-tables-extra th, .pricing-tables-extra td {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+.input-container {
+    margin-top: 5px; /* Reduce el margen superior */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 15pt;
+    margin-bottom: 0px; /* Elimina el margen inferior */
+}
+
+.input-container select {
+    margin-bottom: 2px; /* Mantén el pequeño espacio entre el select y el siguiente elemento */
+    padding: 5px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2px; /* Reducir el margen superior de los checkboxes */
+    margin-bottom: 0px; /* Eliminar margen inferior si es posible */
+}
+
+.checkbox-container label {
+    margin-bottom: 5px; /* Reducir el espacio entre los checkbox y la siguiente línea */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-bottom: 2px; /* Si es necesario reducir el espacio entre los checkboxes */
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.time-checkbox, .pa-checkbox {
+    margin-right: 15px;
+}
+
+.label {
+    margin-right: 10px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    visibility: hidden;
+}
+
+#subtotal_horarioregular {
+    font-size: 1.2rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .calendar td {
+        padding: 8px;
+    }
+
+    .pricing-tables table,
+    .pricing-tables-credit table,
+    .pricing-tables-extra table {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 8px;
+    }
+
+    #subtotal_horarioregular {
+        font-size: 1.5rem;
+    }
+}
+
+.h3-style {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+/* Checkbox Logic */
+.checkbox-container {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.time-checkbox, .pa-checkbox {
+    margin-right: 15px;
+}
+
+.label {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+}
+
+input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+}
+
+.label.disabled {
+    color: gray;
+}
+
+.label.enabled {
+    color: black;
+}

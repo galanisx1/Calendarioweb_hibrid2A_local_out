@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Interactivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="../static/css/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Calendario de Diciembre 2024 y Enero 2025</h1>
+<!-- Se agregaron las tablas que estan en archivo tables.py -->
+   
+    <div>
+        {{ calendar_table|safe }}
+    </div>
+       
+    <!-- Calendario de Diciembre 2024 y Enero 2025 -->
+   
+
+    <hr style="border: 1px solid rgb(216, 216, 216); margin: 0px 0; width: 25%;">
+
+    <div class="input-container">
+        <label for="payment-method">Seleccionar método de pago:</label>
+        <select id="payment-method">
+            <option value="">Seleccione una opción</option>
+            <option value="credit-card">Tarjeta de crédito</option>
+            <option value="cash">Efectivo</option>
+        </select>
+        <p id="selected-method"></p>
+    </div>
+
+   
+    <!-- Nuevos campos de entrada para Participantes -->
+    <div class="input-container">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <label for="Participantes_hijos" style="font-size: 15pt;">Hijos: </label>
+            <select id="Participantes_hijos" name="Participantes_hijos">
+              <option value="">Seleccionar</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            
+            <label style="font-size: 12pt; white-space: nowrap;">
+                <input type="checkbox" id="checkbox_primo" name="checkbox_primo" disabled> Extender descuento a 1 primo
+            </label>
+        </div>
+    </div>
+
+<h3>Total de Participantes: <span id="totalParticipantesLabel">0</span></h3>
+<hr style="border: 1px solid rgb(216, 216, 216); margin: -2px 0; width: 25%;">
+
+    <div class="checkbox-container">
+        <!-- Row for 8am -->
+        <div class="checkbox-container">
+            <!-- Row for 8am -->
+            <div class="row">
+                <div class="time-checkbox">
+                    <label class="label">
+                        <input type="checkbox" id="8am"> 8am
+                    </label>
+                </div>
+                <div class="pa-checkbox">
+                    <label class="label disabled" id="label-8am-pa">
+                        <input type="checkbox" id="8am-pa1" disabled> PixelArt
+                    </label>
+                </div>
+            </div>
+    
+            <!-- Row for 2pm -->
+            <div class="row">
+                <div class="time-checkbox">
+                    <label class="label">
+                        <input type="checkbox" id="2pm"> 2pm
+                    </label>
+                </div>
+                <div class="pa-checkbox">
+                    <label class="label disabled" id="label-2pm-pa">
+                        <input type="checkbox" id="2pm-pa1" disabled> PixelArt
+                    </label>
+                </div>
+            </div>
+    
+            <!-- Row for 3pm -->
+            <div class="row">
+                <div class="time-checkbox">
+                    <label class="label">
+                        <input type="checkbox" id="3pm"> 3pm
+                    </label>
+                </div>
+                <div class="pa-checkbox">
+                    <label class="label disabled" id="label-3pm-pa">
+                        <input type="checkbox" id="3pm-pa1" disabled> PixelArt
+                    </label>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <hr style="border: 1px solid rgb(216, 216, 216); margin: 5px 0; width: 25%;">
+
+    <!-- Label para mostrar los días seleccionados -->
+<h3>Días Seleccionados: <span id="Label_Dias_Seleccionados">0</span></h3>
+
+<hr width="5" style="border: 1px solid rgb(216, 216, 216); margin: 5px 0; width: 25%;">
+
+    <!-- Subtotal Horario Regular -->
+<h3>Horario Regular: $<span id="subtotal_horarioregular">0</span></h3>
+
+    <!-- Nuevo Label para Horario Extra -->
+    <h3 style="text-align: left;">Horario Extra: $<span id="horario_extra">0</span></h3>
+    
+
+    <hr style="border: 1px solid rgb(216, 216, 216); margin: 10px 0; width: 25%;">
+  
+    <!-- Total a Pagar -->
+    <label id="TotalApagar" class="h3-style">Total a Pagar: $0</label>
+
+    <hr style="border: 1px solid rgb(216, 216, 216); margin: 10px 0; width: 25%;">
+
+    <div class="input-container">
+        <label for="password-input">Administrador</label>
+        <input type="text" id="password-input" placeholder="Password">
+        <button id="mostrar-tablas-btn">Log In</button>
+        <p id="error-message" style="visibility: hidden; color: red;">Contraseña incorrecta</p>
+    </div>
+    
+    <!-- Tablas inicialmente ocultas -->
+    <div class="hidden pricing-tables">
+        {{ pricing_tables|safe }}
+    </div>
+    <div class="hidden pricing-tables-credit">
+        <!-- Contenido de tablas2 (si aplica) -->
+        {{ pricing_tables_credit|safe }}
+    </div>
+    <div class="hidden pricing-tables-extra">
+        <!-- Contenido de tablas3 (si aplica) -->
+        {{ pricing_tables_extra|safe }}
+    </div>   
+
+<script>
+    // Función para manejar el evento del botón
+    document.getElementById('mostrar-tablas-btn').addEventListener('click', () => {
+        const passwordInput = document.getElementById('password-input').value;
+        const errorMessage = document.getElementById('error-message');
+
+        // Todas las tablas que se quieren mostrar
+        const tablas = document.querySelectorAll('.pricing-tables, .pricing-tables-credit, .pricing-tables-extra');
+
+        if (passwordInput === '1234') {
+            errorMessage.style.visibility = 'hidden'; // Oculta el mensaje de error
+
+            // Muestra todas las tablas
+            tablas.forEach(tabla => {
+                tabla.classList.remove('hidden'); // Remueve la clase que oculta
+                tabla.style.display = 'flex';    // Asegura la visibilidad
+            });
+        } else {
+            errorMessage.style.visibility = 'visible'; // Muestra el mensaje de error
+        }
+    });
+
+        // Capturar la selección del método de pago
+        document.getElementById("payment-method").addEventListener("change", function () {
+            selectedPaymentMethod = this.value;
+            const displayMethod = selectedPaymentMethod === "credit-card" ? 
+                                  "Tarjeta de crédito" : 
+                                  "Efectivo";
+            /*document.getElementById("selected-method").textContent = 
+                `Método seleccionado: ${displayMethod}`; */
+        });
+</script>
+
+<script>
+    function updateCheckboxes() {
+        const checkbox8am = document.getElementById("8am");
+        const checkbox8amPA = document.getElementById("8am-pa1");
+        const label8amPA = document.getElementById("label-8am-pa");
+
+        const checkbox2pm = document.getElementById("2pm");
+        const checkbox2pmPA = document.getElementById("2pm-pa1");
+        const label2pmPA = document.getElementById("label-2pm-pa");
+
+        const checkbox3pm = document.getElementById("3pm");
+        const checkbox3pmPA = document.getElementById("3pm-pa1");
+        const label3pmPA = document.getElementById("label-3pm-pa");
+
+        // Update 8am logic
+        if (!checkbox8am.checked) {
+            checkbox8amPA.checked = false;
+            checkbox8amPA.disabled = true;
+            label8amPA.classList.add("disabled");
+            label8amPA.classList.remove("enabled");
+        } else {
+            checkbox8amPA.disabled = false;
+            label8amPA.classList.add("enabled");
+            label8amPA.classList.remove("disabled");
+        }
+
+        // Update 2pm logic
+        if (!checkbox2pm.checked) {
+            checkbox2pmPA.checked = false;
+            checkbox2pmPA.disabled = true;
+            label2pmPA.classList.add("disabled");
+            label2pmPA.classList.remove("enabled");
+        } else {
+            checkbox2pmPA.disabled = false;
+            label2pmPA.classList.add("enabled");
+            label2pmPA.classList.remove("disabled");
+        }
+
+        // Update 3pm logic
+        if (!checkbox3pm.checked) {
+            checkbox3pmPA.checked = false;
+            checkbox3pmPA.disabled = true;
+            label3pmPA.classList.add("disabled");
+            label3pmPA.classList.remove("enabled");
+        } else {
+            checkbox3pmPA.disabled = false;
+            label3pmPA.classList.add("enabled");
+            label3pmPA.classList.remove("disabled");
+        }
+    }
+
+    document.getElementById("8am").addEventListener("change", updateCheckboxes);
+    document.getElementById("2pm").addEventListener("change", updateCheckboxes);
+    document.getElementById("3pm").addEventListener("change", updateCheckboxes);
+</script>
+
+<script type="text/javascript">
+function updateHorarioExtra() {
+    const diasSeleccionados = Dias_Seleccionados;
+    const participantesHijos = parseInt(Var_Participantes_hijos) || 0;
+    const checkbox8am = document.getElementById("8am").checked;
+    const checkbox8amPA = document.getElementById("8am-pa1").checked;
+    const checkbox2pm = document.getElementById("2pm").checked;
+    const checkbox2pmPA = document.getElementById("2pm-pa1").checked;
+    const checkbox3pm = document.getElementById("3pm").checked;
+    const checkbox3pmPA = document.getElementById("3pm-pa1").checked;
+
+    let extraSumarParticipante = 0;
+    let extraSumarParticipante2pm = 0;
+    let extraSumarParticipante3pm = 0;
+    let hExtraTotal = 0;
+    let hExtra8am = 0;
+    let hExtra2pm = 0;
+    let hExtra3pm = 0;
+
+    // Calculo para las 8am
+    // Calcula Extra_Sumar_Participante solo si hay al menos 2 hijos
+        if (participantesHijos >= 2) {
+        if (checkbox8am && !checkbox8amPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+            extraSumarParticipante = 23 * (participantesHijos - 1) * diasSeleccionados;
+        } else if (checkbox8am && checkbox8amPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+            extraSumarParticipante = 25 * (participantesHijos - 1) * diasSeleccionados;
+        } else if (checkbox8am && !checkbox8amPA && diasSeleccionados >= 5) {
+            extraSumarParticipante = 14 * (participantesHijos - 1) * diasSeleccionados;
+        } else {
+            extraSumarParticipante = 15 * (participantesHijos - 1) * diasSeleccionados;
+        }
+    }
+
+    // Calcula HExtra según las condiciones
+    if (checkbox8am && !checkbox8amPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+        hExtra8am = ((45 * 1) * diasSeleccionados) + extraSumarParticipante;
+    }
+    
+    if (checkbox8am && !checkbox8amPA && diasSeleccionados >= 5) {
+        hExtra8am = ((27 * 1) * diasSeleccionados) + extraSumarParticipante;
+    }
+
+    if (checkbox8am && checkbox8amPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+        hExtra8am = ((50 * 1) * diasSeleccionados) + extraSumarParticipante;
+    }
+    
+    if (checkbox8am && checkbox8amPA && diasSeleccionados >= 5) {
+        hExtra8am = ((30 * 1) * diasSeleccionados) + extraSumarParticipante;
+    }
+
+
+    // Calculo para las 2pm
+    // Calcula Extra_Sumar_Participante solo si hay al menos 2 hijos
+    if (participantesHijos >= 2) {
+        if (checkbox2pm && !checkbox2pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+            extraSumarParticipante2pm = 23 * (participantesHijos - 1) * diasSeleccionados;
+        } else if (checkbox2pm && checkbox2pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+            extraSumarParticipante2pm = 25 * (participantesHijos - 1) * diasSeleccionados;
+        } else if (checkbox2pm && !checkbox2pmPA && diasSeleccionados >= 5) {
+            extraSumarParticipante2pm = 14 * (participantesHijos - 1) * diasSeleccionados;
+        } else {
+            extraSumarParticipante2pm = 15 * (participantesHijos - 1) * diasSeleccionados;
+        }
+    }
+
+    // Calcula HExtra según las condiciones
+    if (checkbox2pm && !checkbox2pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+        hExtra2pm = ((45 * 1) * diasSeleccionados) + extraSumarParticipante2pm;
+    }
+    
+    if (checkbox2pm && !checkbox2pmPA && diasSeleccionados >= 5) {
+        hExtra2pm = ((27 * 1) * diasSeleccionados) + extraSumarParticipante2pm;
+    }
+
+    if (checkbox2pm && checkbox2pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+        hExtra2pm = ((50 * 1) * diasSeleccionados) + extraSumarParticipante2pm;
+    }
+    
+    if (checkbox2pm && checkbox2pmPA && diasSeleccionados >= 5) {
+        hExtra2pm = ((30 * 1) * diasSeleccionados) + extraSumarParticipante2pm;
+    }
+
+// Calculo para las 3pm
+    // Calcula Extra_Sumar_Participante solo si hay al menos 2 hijos
+    if (participantesHijos >= 2) {
+        if (checkbox3pm && !checkbox3pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+            extraSumarParticipante3pm = 23 * (participantesHijos - 1) * diasSeleccionados;
+        } else if (checkbox3pm && checkbox3pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+            extraSumarParticipante3pm = 25 * (participantesHijos - 1) * diasSeleccionados;
+        } else if (checkbox3pm && !checkbox3pmPA && diasSeleccionados >= 5) {
+            extraSumarParticipante3pm = 14 * (participantesHijos - 1) * diasSeleccionados;
+        } else {
+            extraSumarParticipante3pm = 15 * (participantesHijos - 1) * diasSeleccionados;
+        }
+    }
+
+    // Calcula HExtra según las condiciones
+    if (checkbox3pm && !checkbox3pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+        hExtra3pm = ((45 * 1) * diasSeleccionados) + extraSumarParticipante2pm;
+    }
+    
+    if (checkbox3pm && !checkbox3pmPA && diasSeleccionados >= 5) {
+        hExtra3pm = ((27 * 1) * diasSeleccionados) + extraSumarParticipante3pm;
+    }
+
+    if (checkbox3pm && checkbox3pmPA && diasSeleccionados >= 1 && diasSeleccionados <= 4) {
+        hExtra3pm = ((50 * 1) * diasSeleccionados) + extraSumarParticipante3pm;
+    }
+    
+    if (checkbox3pm && checkbox3pmPA && diasSeleccionados >= 5) {
+        hExtra3pm = ((30 * 1) * diasSeleccionados) + extraSumarParticipante3pm;
+    }
+
+    // Sumatoria de Horas Extras
+    hExtraTotal = hExtra8am + hExtra2pm + hExtra3pm
+    // Actualiza el valor en el documento
+    document.getElementById("horario_extra").textContent = hExtraTotal.toFixed(2);
+    updateTotalApagar(); // Actualiza el total
+}
+
+// Llama a updateHorarioExtra cuando cambian las condiciones relevantes
+document.getElementById('Participantes_hijos').addEventListener('change', updateHorarioExtra);
+document.getElementById("8am").addEventListener("change", updateHorarioExtra);
+document.getElementById("8am-pa1").addEventListener("change", updateHorarioExtra);
+document.getElementById("2pm").addEventListener("change", updateHorarioExtra);
+document.getElementById("2pm-pa1").addEventListener("change", updateHorarioExtra);
+document.getElementById("3pm").addEventListener("change", updateHorarioExtra);
+document.getElementById("3pm-pa1").addEventListener("change", updateHorarioExtra);
+document.querySelectorAll('.calendar td').forEach(cell => {
+    cell.addEventListener('click', updateHorarioExtra);
+});
+</script>
+
+<script src="static/js/calculations.js"></script>
+
+</body>
+</html>
