@@ -5,6 +5,7 @@
     
         let Var_Participantes_hijos = '';
         let Var_Participantes_amigos = '';
+        let Var_Participantes_amigos2 = 0;
         let Dias_Seleccionados = 0;
         let Total_Participantes = 0;
         let displayMethod = "Efectivo"; // Valor inicial
@@ -41,32 +42,43 @@
             updateSubtotalHorarioregular();
         }
     
+        
         // Función para actualizar el subtotal de horario regular
         function updateSubtotalHorarioregular() {
             const diasSeleccionados = Dias_Seleccionados;
             const participantesHijos = parseInt(Var_Participantes_hijos) || 0;
     
             let valor = 0;
-    
+            let participantesAux = participantesHijos;
+
+            if (participantesHijos == 1) {
+                if (Var_Participantes_amigos2 == 1) {
+                    participantesAux = 2; // Corrección: Usar '=' en lugar de '=='
+                }
+            }
+
+
             if (diasSeleccionados >= 1 && diasSeleccionados <= 4) {
                 valor = displayMethod === "Efectivo" ?
-                    (participantesHijos === 1 ? 305 : participantesHijos === 2 ? 285 : 260) :
-                    (participantesHijos === 1 ? 305 : participantesHijos === 2 ? 285 : 260);
+                    (participantesAux === 1 ? 305 : participantesAux  === 2 ? 285 : 260) :
+                    (participantesAux  === 1 ? 305 : participantesAux  === 2 ? 285 : 260);
             } else if (diasSeleccionados >= 5 && diasSeleccionados <= 9) {
                 valor = displayMethod === "Efectivo" ?
-                    (participantesHijos === 1 ? 288 : participantesHijos === 2 ? 265 : 253) :
-                    (participantesHijos === 1 ? 288 : participantesHijos === 2 ? 265 : 253);
+                    (participantesAux  === 1 ? 288 : participantesAux  === 2 ? 265 : 253) :
+                    (participantesAux  === 1 ? 288 : participantesAux  === 2 ? 265 : 253);
             } else if (diasSeleccionados >= 10 && diasSeleccionados <= 14) {
                 valor = displayMethod === "Efectivo" ?
-                    (participantesHijos === 1 ? 273 : participantesHijos === 2 ? 251 : 241) :
-                    (participantesHijos === 1 ? 280 : participantesHijos === 2 ? 262 : 251);
+                    (participantesAux  === 1 ? 273 : participantesAux  === 2 ? 251 : 241) :
+                    (participantesAux  === 1 ? 280 : participantesAux  === 2 ? 262 : 251);
             } else if (diasSeleccionados >= 15 && diasSeleccionados <= 18) {
                 valor = displayMethod === "Efectivo" ?
-                    (participantesHijos === 1 ? 265 : participantesHijos === 2 ? 245 : 234) :
-                    (participantesHijos === 1 ? 276 : participantesHijos === 2 ? 260 : 249);
+                    (participantesAux  === 1 ? 265 : participantesAux  === 2 ? 245 : 234) :
+                    (participantesAux  === 1 ? 276 : participantesAux  === 2 ? 260 : 249);
             }
+
+             
     
-            subtotal_horarioregular = valor * diasSeleccionados * participantesHijos;
+            subtotal_horarioregular = valor * diasSeleccionados * (participantesHijos + Var_Participantes_amigos2);
             document.getElementById("subtotal_horarioregular").textContent = subtotal_horarioregular.toFixed(2);
             updateTotalApagar();
         }
@@ -112,10 +124,12 @@
             }
     
             if (checkboxPrimo.checked) {
-                participantesHijos += 1;
+                Var_Participantes_amigos2 = 1;
+            } else {
+                Var_Participantes_amigos2 = 0;
             }
     
-            totalParticipantesLabel.textContent = participantesHijos;
+            totalParticipantesLabel.textContent = participantesHijos + Var_Participantes_amigos2;
             Var_Participantes_hijos = participantesHijos.toString();
             updateSubtotalHorarioregular();
         }
