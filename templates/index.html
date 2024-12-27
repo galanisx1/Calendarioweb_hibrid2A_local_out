@@ -140,6 +140,8 @@
         {{ pricing_tables_extra|safe }}
     </div>   
 
+    <script src="static/js/calculations.js"></script>
+
 <script>
     // Función para manejar el evento del botón
     document.getElementById('mostrar-tablas-btn').addEventListener('click', () => {
@@ -231,8 +233,17 @@
 
 <script type="text/javascript">
 function updateHorarioExtra() {
+
     const diasSeleccionados = Dias_Seleccionados;
-    const participantesHijos = parseInt(Var_Participantes_hijos) || 0;
+    let participantesHijos = parseInt(document.getElementById('Participantes_hijos').value) || 0;
+    const checkboxPrimo = document.getElementById('checkbox_primo').checked;
+
+    // Agrega 1 a participantesHijos si el checkbox_primo está seleccionado
+    if (checkboxPrimo) {
+        participantesHijos += 1;
+    }
+
+
     const checkbox8am = document.getElementById("8am").checked;
     const checkbox8amPA = document.getElementById("8am-pa1").checked;
     const checkbox2pm = document.getElementById("2pm").checked;
@@ -351,6 +362,7 @@ function updateHorarioExtra() {
 
 // Llama a updateHorarioExtra cuando cambian las condiciones relevantes
 document.getElementById('Participantes_hijos').addEventListener('change', updateHorarioExtra);
+document.getElementById('checkbox_primo').addEventListener('change', updateHorarioExtra);
 document.getElementById("8am").addEventListener("change", updateHorarioExtra);
 document.getElementById("8am-pa1").addEventListener("change", updateHorarioExtra);
 document.getElementById("2pm").addEventListener("change", updateHorarioExtra);
@@ -361,8 +373,5 @@ document.querySelectorAll('.calendar td').forEach(cell => {
     cell.addEventListener('click', updateHorarioExtra);
 });
 </script>
-
-<script src="static/js/calculations.js"></script>
-
 </body>
 </html>
