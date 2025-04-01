@@ -14,76 +14,57 @@ calendar_table = """
     </tr>
     
     <tr>
+        <td class="disabled"><span>30</span></td>
+        <td class="disabled"><span>31</span></td>
         <td class="disabled"><span>1</span></td>
         <td class="disabled"><span>2</span></td>
         <td class="disabled"><span>3</span></td>
         <td class="disabled"><span>4</span></td>
         <td class="disabled"><span>5</span></td>
-        <td class="disabled"><span>6</span></td>
-        <td class="disabled"><span>7</span></td>
         
     </tr>
 
     <tr>
+        <td class="disabled"><span>6</span></td>
+        <td class="disabled"><span>7</span></td>
         <td class="disabled"><span>8</span></td>
         <td class="disabled"><span>9</span></td>
         <td class="disabled"><span>10</span></td>
         <td class="disabled"><span>11</span></td>
         <td class="disabled"><span>12</span></td>
-        <td class="disabled"><span>13</span></td>
-        <td class="disabled"><span>14</span></td>
         
     </tr>
     <tr>
-        <td class="disabled"><span>15</span></td>
+        <td class="disabled"><span>13</span></td>
+        <td><span>14</span></td>
+        <td><span>15</span></td>
         <td><span>16</span></td>
         <td><span>17</span></td>
         <td><span>18</span></td>
-        <td><span>19</span></td>
-        <td><span>20</span></td>
-        <td class="disabled"><span>21</span></td>
+        <td class="disabled"><span>19</span></td>
         
     </tr>
     <tr>
-        <td class="disabled"><span>22</span></td>
+        <td class="disabled"><span>20</span></td>
+        <td><span>21</span></td>
+        <td><span>22</span></td>
         <td><span>23</span></td>
         <td><span>24</span></td>
-        <td class="disabled"><span>25</span></td> <!-- Navidad -->
-        <td><span>26</span></td>
-        <td><span>27</span></td>
+        <td><span>25</span></td>
+        <td class="disabled"><span>26</span></td>
+        
+    </tr>
+    <tr>
+        <td class="disabled"><span>27</span></td>
         <td class="disabled"><span>28</span></td>
-        
-    </tr>
-    <tr>
         <td class="disabled"><span>29</span></td>
-        <td><span>30</span></td>
-        <td><span>31</span></td>
-        <td class="disabled"></td>
+        <td class="disabled"><span>30</span></td>
         <td class="disabled"></td>
         <td class="disabled"></td>
         <td class="disabled"></td>
         
     </tr>
-    <tr>
-        <td class="disabled"></td>
-        <td class="disabled"></td>
-        <td class="disabled"></td>
-        <td class="disabled"><span>1</span></td> <!-- Año Nuevo -->
-        <td><span>2</span></td>
-        <td><span>3</span></td>
-        <td class="disabled"><span>4</span></td>
-        
-    </tr>
-    <tr>
-        <td class="disabled"><span>5</span></td>
-        <td><span>6</span></td>
-        <td><span>7</span></td>
-        <td><span>8</span></td>
-        <td><span>9</span></td>
-        <td><span>10</span></td>
-        <td class="disabled"><span>11</span></td>
-            
-    </tr>
+    
 </table>
 """
 
@@ -96,19 +77,19 @@ pricing_tables = """
             </tr>
             <tr>
                 <td>Días 1-4 (1pE)</td>
-                <td id="valor_1_4_1p">$305</td>
+                <td id="valor_1_4_1p">$315</td>
             </tr>
             <tr>
                 <td>Días 5-9 (1pE)</td>
-                <td id="valor_5_9_1p">$288</td>
+                <td id="valor_5_9_1p">$302</td>
             </tr>
             <tr>
                 <td>Días 10-14 (1pE)</td>
-                <td id="valor_10_14_1p">$273</td>
+                <td id="valor_10_14_1p">$287</td>
             </tr>
             <tr>
                 <td>Días 15-18 (1pE)</td>
-                <td id="valor_15_18_1p">$265</td>
+                <td id="valor_15_18_1p">$287</td>
             </tr>
         </table>
         
